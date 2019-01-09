@@ -3,14 +3,13 @@ package devlab.storage.commons;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 public class DateParser {
 
-    public static java.sql.Date fromStringToSqlDate(String date) throws ParseException {
+    public static java.sql.Date fromStringToSqlDate(String date, String pattern) throws ParseException {
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format = new SimpleDateFormat(pattern); //"yyyy-MM-dd"
         Date parsedDate = format.parse(date);
         return new java.sql.Date(parsedDate.getTime());
 
