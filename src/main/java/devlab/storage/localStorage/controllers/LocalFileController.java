@@ -29,17 +29,19 @@ import java.util.stream.Collectors;
 @RequestMapping("api/local/files/")
 public class LocalFileController {
 
-    private ServletContext servletContext;
-    private String uploads;
+    private ServletContext servletContext; //dla ścieżki plików - ścieżka tymaczasowa
+    private String uploads; //ścieżka
 
+    //@Autowired
     public LocalFileController(ServletContext servletContext) {
         this.servletContext = servletContext;
         createDirectory();
     }
 
+    //metoda tworząca folder, gdy nie istnieje. Uruchamiana wraz ładowaniem aplikacji.
     private void createDirectory() {
         uploads = servletContext.getRealPath("/uploads/");
-        System.out.println(uploads);
+        System.out.println(uploads.toUpperCase());
         Path path = Paths.get(uploads);
         //if directory exists?
         if (!Files.exists(path)) {
@@ -53,7 +55,6 @@ public class LocalFileController {
 
     @GetMapping("list")
     public List<LocalFile> getResources() throws IOException {
-
 
             return Files.walk(Paths.get(uploads))
                     .filter(Files::isRegularFile)
@@ -119,7 +120,7 @@ public class LocalFileController {
         System.out.println(contentType);
 
         return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType(contentType))
+                .contentType(MediaType.parseMediaType(contentType)) //default: octet stream
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + targetFile.getName() + "\"")
                 .contentLength(targetFile.length())
                 .body(resource);
