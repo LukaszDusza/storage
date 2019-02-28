@@ -52,8 +52,11 @@ public class DbFileController {
 
         Date date = new Date();
 
-            return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, fileDeleteUri,
-                    file.getContentType(), file.getSize(), date, DateParser.fromUtilDateToString(date, "dd/MM/yyyy HH:mm:ss" ));
+//            return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, fileDeleteUri,
+//                    file.getContentType(), file.getSize(), date, DateParser.fromUtilDateToString(date, "dd/MM/yyyy HH:mm:ss" ));
+
+        return new UploadFileResponse(dbFile.getFileName(), fileDownloadUri, fileDeleteUri,
+                file.getContentType(), file.getSize());
 
     }
 
@@ -76,16 +79,26 @@ public class DbFileController {
                             .toUriString();
 
 
-                        dbFiles.add(new UploadFileResponse(
-                                f.getFileName(),
-                                fileDownloadUri,
-                                fileDeleteUri,
-                                f.getFileType(),
-                                (long) f.getData().length,
-                                f.getDate(),
-                                DateParser.fromUtilDateToString(f.getDate(), "dd/MM/yyyy HH:mm:ss" )
+//                        dbFiles.add(new UploadFileResponse(
+//                                f.getFileName(),
+//                                fileDownloadUri,
+//                                fileDeleteUri,
+//                                f.getFileType(),
+//                                (long) f.getData().length,
+//                                f.getDate(),
+//                                DateParser.fromUtilDateToString(f.getDate(), "dd/MM/yyyy HH:mm:ss" )
+//
+//                        ));
 
-                        ));
+                    dbFiles.add(new UploadFileResponse(
+                            f.getFileName(),
+                            fileDownloadUri,
+                            fileDeleteUri,
+                            f.getFileType(),
+                            (long) f.getData().length
+
+
+                    ));
                     return null;
                 })
                 .collect(Collectors.toList());
